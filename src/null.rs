@@ -1,7 +1,8 @@
 // Rust does not have nulls, so how does it
 // represent values that does not exist?
 
-// In addition to structs (product types), Rust has enumerations (sum types).
+// In addition to structs (product types),
+// Rust has enumerations (sum types).
 // A value of Abc can only be A, B or C.
 enum Abc {
     A,
@@ -16,6 +17,13 @@ enum Abc {
 enum Age {
     Underage,
     Custom(u8),
+}
+
+#[repr(C)]
+enum CStyleEnum {
+    A = 0,
+    B,
+    C,
 }
 
 // So you could represent a missing value as such,

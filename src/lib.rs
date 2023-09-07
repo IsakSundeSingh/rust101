@@ -1,3 +1,5 @@
+//! Dokumentasjon til modulen
+
 #![allow(dead_code)]
 #![allow(unused_variables)]
 #![allow(unused_imports)]
@@ -8,9 +10,13 @@
 mod null;
 mod owners;
 
+/// Konverteres til det samme
+#[doc = "Dokumentasjon til Thing"]
+struct Thing;
+
 // A comment!
 
-// A function!
+/// A function!
 fn empty_function() {}
 
 fn lets_talk_about_variables() {
@@ -29,7 +35,8 @@ fn lets_talk_about_variables() {
     // there's i8, i16, i32, i64, i128
     //    also u8, u16, u32, u64, u128 for unsigned
 
-    // But integer literals are checked at compile-time to see if they are too big to fit in their type
+    // But integer literals are checked at compile-time
+    // to see if they are too big to fit in their type
     // let x: i8 = 256;
     // Produces this compiler output:
     // error: literal out of range for `i8`
@@ -42,7 +49,8 @@ fn lets_talk_about_variables() {
     //    = help: consider using the type `i16` instead
     //    = note: `#[deny(overflowing_literals)]` on by default
 
-    // Variable names are actually bindings, where underscore (`_`) means to throw away the value
+    // Variable names are actually bindings, where
+    // underscore (`_`) means to throw away the value
     let _ = 123;
 
     // Starting with an underscore is convention for unused values
@@ -64,7 +72,8 @@ fn lets_move_on_to_other_types() {
     let (_, i_want_this_one) = some_func();
 }
 
-// Function arguments and return values are written with colons and a returning arrow
+// Function arguments and return values are
+// written with colons and a returning arrow
 fn add(first: i32, second: i32) -> i32 {
     return first + second;
 }
@@ -73,7 +82,8 @@ fn simpler_add(first: i32, second: i32) -> i32 {
     first + second
     // Note the missing semicolon 👆
     // A semicolon marks a statement, returning nothing,
-    // while a missing semicolon means an expression, which is implicitly returned
+    // while a missing semicolon means an expression,
+    // which is implicitly returned
     // This is the idiomatic way to write it
 }
 
@@ -111,7 +121,8 @@ fn blocks_are_expressions() {
     // is equivalent to this:
     let x = { 123 };
 
-    // And blocks can also have statements, like a function, returning the last expression
+    // And blocks can also have statements,
+    // like a function, returning the last expression
     // So this is equivalent to the above:
     let x = {
         let hundred = 100;
@@ -142,14 +153,17 @@ fn methods_and_imports() {
     let biggest = 100.max(-100); // This is 100
 
     // The double-colon is similar, but works on namespaces
-    // `std` is a crate (a library), `cmp` is a module (a file), and `max` is a function
+    // `std` is a crate (a library),
+    // `cmp` is a module (a file), and `max` is a function
     let biggest = std::cmp::max(100, -100); // This is 100
 
     // You can use `use` to import things into scope instead of writing the whole thing
     use std::cmp::max;
-    let biggest = max(100, -100); // This is the same function call as the two above and is 100
+    let biggest = max(100, -100);
+    // This is the same function call as the two above and is 100
 
-    // A glob can be used to import everything (this is often messy and not idiomatic)
+    // A glob can be used to import
+    // everything (this is often messy and not idiomatic)
     use std::cmp::*;
 
     // Or better, just use curly brackets to import just what you need
@@ -166,9 +180,12 @@ fn methods_and_imports() {
     // These are equivalent
     let string_len = string.len();
     let string_len = str::len(string);
-    // Types like    👆 which are used often are in the prelude and don't need importing
-    // And since types are namespaces, we can use `::` to access methods on them
-    let biggest = i32::max(-100, 100); // Also 100, also equivalent to the comparison at the top
+    // Types like    👆 which are used often
+    // are in the prelude and don't need importing
+    // And since types are namespaces,
+    // we can use `::` to access methods on them
+    let biggest = i32::max(-100, 100);
+    // Also 100, also equivalent to the comparison at the top
 }
 
 // Let's talk about types baby
@@ -176,6 +193,9 @@ struct SomeData {
     my_int: i32,
     is_mine: bool,
 }
+
+struct SomeDataWithAnonymousFields(i32, bool);
+struct EmptyStruct;
 
 fn creating_values() {
     // This is how we create a value of the type
@@ -216,7 +236,8 @@ fn print_if_mine(data: SomeData) {
     }
 }
 
-// Functions can also be written as methods, using self as a standin for the name
+// Functions can also be written as methods,
+// using self as a standin for the name
 impl SomeData {
     fn print_if_mine(self: SomeData) {
         if self.is_mine {
@@ -233,6 +254,18 @@ impl SomeData {
     // fn print_if_mine(self)
 }
 
-fn some_func() -> (i32, i32) {
-    todo!()
+/// # Some func title
+/// This is some func
+///
+/// You can link to [SomeData]
+///
+/// ```
+/// # let x = 2; // Setup stuff can be done hidden behind a hash
+/// # use rust101::some_func;
+/// let (a,b) = some_func();
+/// assert_eq!(a, b);
+/// ```
+pub fn some_func() -> (i32, i32) {
+    //! Document the surrounding item
+    (1, 2)
 }
