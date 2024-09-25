@@ -1,4 +1,4 @@
-//! Dokumentasjon til modulen
+//! Module documentation goes here (notice the exclamation mark meaning document the thing I am inside)
 
 #![allow(dead_code)]
 #![allow(unused_variables)]
@@ -10,20 +10,26 @@
 mod null;
 mod owners;
 
-/// Konverteres til det samme
-#[doc = "Dokumentasjon til Thing"]
+/// This line means document the item below (the struct)
+#[doc = "This is equivalent to the triple-slash syntax above, the above is converted to this attribute syntax"]
 struct Thing;
 
 // A comment!
+/* Another comment /* Nested comment ooh */ */
 
 /// A function!
+///
+/// We can use Markdown-syntax in doc-comments
+/// ```rust
+/// empty_function()
+/// ```
 fn empty_function() {}
 
 fn lets_talk_about_variables() {
     let x; // declare "x"
     x = 123; // assign 123 to "x"
 
-    // Can also be written as
+    // Is idiomatically written as
     let x = 123;
 
     // The type is inferred, but can also be written explicitly
@@ -32,8 +38,9 @@ fn lets_talk_about_variables() {
     // Variables can be shadowed and integers can fit into multiple sizes
     let x: i64 = 123;
 
-    // there's i8, i16, i32, i64, i128
-    //    also u8, u16, u32, u64, u128 for unsigned
+    // there's also i8, i16, i32, i64, i128
+    //          and u8, u16, u32, u64, u128 for unsigned
+    // for           8,  16,  32,  64,  128 bit long integers
 
     // But integer literals are checked at compile-time
     // to see if they are too big to fit in their type
@@ -54,6 +61,7 @@ fn lets_talk_about_variables() {
     let _ = 123;
 
     // Starting with an underscore is convention for unused values
+    // and Rust understands it is not meant to be used, so it allows it
     let _going_to_use_this_later_maybe = 321;
 }
 
@@ -65,7 +73,7 @@ fn lets_move_on_to_other_types() {
     let left = pair.0;
     let right = pair.1;
 
-    // Or just destructured directly
+    // Or idiomatically destructured directly
     let (left, right) = some_func();
 
     // And you can discard items easily
