@@ -197,6 +197,26 @@ Four states can be true at any time, technically:
 
 ---
 
+# Product types in Rust: structs
+
+```csharp
+class Access {
+    public bool Read { get; set; }
+    public bool Write { get; set; }
+}
+```
+
+Is equivalent to the Rust code:
+
+```rust
+struct Access {
+    pub read: bool,
+    pub write: bool
+}
+```
+
+---
+
 # Sum types
 
 A Rust-enum or a C#-enum is a sum-type. Is is this either one or the other:
