@@ -7,7 +7,7 @@ transition: melt
 <!-- _class: lead -->
 <!-- _color: orange -->
 
-# Rust 101
+# Intro to Rust
 
 ---
 
@@ -17,6 +17,11 @@ transition: melt
 - Functions
 - Data types
 - Pattern matching
+- Error handling
+- Loops
+- Closures
+- References
+- Macros
 
 ---
 
@@ -393,3 +398,74 @@ fn try_parse_123(number: String) -> Result<i32, NumberParsingError> {
     }
 }
 ```
+
+---
+
+# Loops
+
+Rust has three types of loop constructs:
+
+- `for`-loops: `for x in iterator {}`
+  - Iterates over the `iterator`
+- `while`-loops: `while condition {}`
+  - Loops as long as the `condition` holds
+- `loop`-loops: `loop {}`
+  - Loops forever, until it encounters a `break` or `return` inside it
+
+Often the most idiomatic way is to use `map`, `filter` and `reduce`.
+
+---
+
+# Ranges
+
+`a..b` creates a range from `a` to but not including `b`, an _exclusive_ range.
+An inclusive range can be written `a..=b` to include `b`.
+
+```rust
+for x in 0..10 {
+    println!("{x}");
+}
+```
+
+---
+
+# Closures
+
+Closures is a function that _closes_ over some variable and captures it's state.
+
+```rust
+fn doubler(x: i32) -> i32 {
+    x * 2
+}
+let double = |x| x * 2;
+```
+
+These are _functionally_ the same, but there are some differences in how they can be used.
+
+---
+
+# References
+
+In Rust a value has three states:
+
+- It can be _owned_: `T`
+- It can be _borrowed_: `&T`
+- It can be _exclusively borrowed_ (mutably borrowed): `&mut T`
+  - Exclusively here means there can be no other live `&mut T` and no `&T` either.
+
+These different states are actually _different_ types. `T != &T`
+Each reference has an associated lifetime describing how long it lives.
+Written e.g. `&'lifetime T`
+
+---
+
+# Macros
+
+A _macro_ is something that inputs some Rust-like code and outputs valid Rust code, which then is compiled along with your program. They look just like function calls with an `!` at the end.
+
+```rust
+let x = 4;
+println!("The value of x is {x}!");
+```
+
+The `println`-macro handles outputting to stdout and adds a newline after your string, ensures your variables can be displayed as strings, performs error-handling, etc.
