@@ -27,10 +27,10 @@ transition: melt
 
 # Variables
 
-Or really, _bindings_. There are no variables, only bindings to values. That binding may be immutable or mutable
+Or really, _bindings_ to variables. That binding may be immutable or mutable
 
 ```rust
-let a = 123;
+let a = 123; // implicitly the same as let a: i32 = 123;
 a = 321; // <- Produces compilation error
 ```
 
@@ -169,7 +169,7 @@ fn question() -> i32 {
 # Data types
 
 - Most commonly-used languages (C#, Java, Kotlin, Python, JS, etc.) only have product types
-- Rust (and almost _all_ functional languages) also has sum types
+- Rust (and almost _all_ statically typed functional languages) also has sum types
 - Together these are called ADTs: Algebraic Data Types
 - Product types can be thought of as **_and_**-types, e.g. this _and_ that
 - Sum types can be thought of as **_or_**-types, e.g. this _or_ that
@@ -244,7 +244,7 @@ We no longer have have write-only access! Only three states!
 # Representing either-or-data in C#
 
 How do you sometimes carry data and other times not?
-In class-like languages: nullability 🤢
+In class-like languages: nullability. Quickly becomes a mess 🤢
 
 ```csharp
 class Address {
@@ -290,6 +290,19 @@ enum Option<T> {
 
 Either you have `Some(value)` or you have `None`
 Where you would use `string?` before, you now use `Option<String>`
+
+---
+
+# No null? What is the other _option_?
+
+Also, since this is so commonly used, Rust adds this to the prelude:
+
+```rust
+use Option::{Some, None};
+
+// This way you can use Some and None directly without writing Option::None
+let x = Some(123);
+```
 
 ---
 
@@ -356,7 +369,7 @@ let restaurant_lookup_result = Some(Restaurant {
         zip_code: 0168,
     },
 });
-match restaurant_lookup_result {
+match restaurant_lookup_result { // Match on five-star restaurants in Oslo
     Some(Restaurant {
         name,
         rating: 5,
@@ -401,6 +414,19 @@ fn try_parse_123(number: String) -> Result<i32, NumberParsingError> {
 
 ---
 
+# Error-handling
+
+Also, similarly to `Option`, since `Result` is so commonly used, Rust adds this to the prelude:
+
+```rust
+use Result::{Ok, Err};
+
+// This way you can use Ok and Err directly without writing Result::Ok
+let x = Ok(123);
+```
+
+---
+
 # Loops
 
 Rust has three types of loop constructs:
@@ -416,13 +442,33 @@ Often the most idiomatic way is to use `map`, `filter` and `reduce`.
 
 ---
 
-# Ranges
+# While-loops
+
+`while`-loops also allows the `while let`-pattern, to loop through something as long as the thing matches som pattern:
+
+```rust
+while let StreetAddress(Address { street, zip_code: 0..=0999}) = addresses {
+    // Only work on street addresses in Oslo, not post boxes or addresses outside Oslo
+}
+```
+
+---
+
+### Ranges
 
 `a..b` creates a range from `a` to but not including `b`, an _exclusive_ range.
 An inclusive range can be written `a..=b` to include `b`.
 
 ```rust
+// Both of these print 10 numbers
 for x in 0..10 {
+    println!("{x}");
+}
+for x in 1..=10 {
+    println!("{x}");
+}
+// Counts down from 10, .rev() reverses the iterator
+for x in 1..=10.rev() {
     println!("{x}");
 }
 ```
@@ -440,7 +486,7 @@ fn doubler(x: i32) -> i32 {
 let double = |x| x * 2;
 ```
 
-These are _functionally_ the same, but there are some differences in how they can be used.
+These are _functionally_ the same, but there are some differences in how they can be used. We'll get to this later, but closures can either be called once, mutate something or be called an unlimited number of times.
 
 ---
 
@@ -469,3 +515,25 @@ println!("The value of x is {x}!");
 ```
 
 The `println`-macro handles outputting to stdout and adds a newline after your string, ensures your variables can be displayed as strings, performs error-handling, etc.
+
+---
+
+### Derive macros
+
+Derive-macros are macros you can add as an attribute to an item (function, type, etc.), that _adds_ behaviour:
+
+```rust
+#[derive(// Can be debug-printed. E.g. `println!("{x:?}");`outputs Thing { "Isak" }
+         Debug,
+         // Implements partial and total equality, e.g. can be compared: `thing_a == thing_b
+         PartialEq, Eq,
+         // Can be cloned
+         Clone,
+         // Can be compared as an order: a < b
+         PartialOrd, Ord
+
+)]
+struct Thing {
+    name: String
+}
+```
