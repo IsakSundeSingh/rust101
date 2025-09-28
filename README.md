@@ -537,3 +537,34 @@ struct Thing {
     name: String
 }
 ```
+
+---
+
+<style scoped>
+section {
+    font-size: 1.35rem;
+}
+</style>
+
+# Assignments
+
+Depending on how proficient you feel:
+
+### Beginner
+
+Start with creating a guessing game where you at the command-line input numbers to try and guess a number between 1 and 100: https://doc.rust-lang.org/book/ch02-00-guessing-game-tutorial.html
+
+### Intermediate (or when you finish)
+
+Do as many Rustlings-exercises as you are able to (around part 11 is where our intro stops)
+https://rustlings.rust-lang.org/
+
+### More than intermediate
+
+Create a small program that find files on your file system given a name.
+Progressively add (optional and non-ordered list):
+
+- Terminal UI
+- Fuzzy-search
+- Previewing of files
+- GUI?
